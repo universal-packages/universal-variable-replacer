@@ -1,15 +1,15 @@
-# Environment Replacer
+# Variable Replacer
 
-[![npm version](https://badge.fury.io/js/@universal-packages%2Fenvironment-replacer.svg)](https://www.npmjs.com/package/@universal-packages/environment-replacer)
-[![Testing](https://github.com/universal-packages/universal-environment-replacer/actions/workflows/testing.yml/badge.svg)](https://github.com/universal-packages/universal-environment-replacer/actions/workflows/testing.yml)
-[![codecov](https://codecov.io/gh/universal-packages/universal-environment-replacer/branch/main/graph/badge.svg?token=CXPJSN8IGL)](https://codecov.io/gh/universal-packages/universal-environment-replacer)
+[![npm version](https://badge.fury.io/js/@universal-packages%2Fvariable-replacer.svg)](https://www.npmjs.com/package/@universal-packages/variable-replacer)
+[![Testing](https://github.com/universal-packages/universal-variable-replacer/actions/workflows/testing.yml/badge.svg)](https://github.com/universal-packages/universal-variable-replacer/actions/workflows/testing.yml)
+[![codecov](https://codecov.io/gh/universal-packages/universal-variable-replacer/branch/main/graph/badge.svg?token=CXPJSN8IGL)](https://codecov.io/gh/universal-packages/universal-variable-replacer)
 
 Easily inject environment variables or provided variables to compose richer strings.
 
 ## Install
 
 ```shell
-npm install @universal-packages/environment-replacer
+npm install @universal-packages/variable-replacer
 ```
 
 ## replaceEnv()
@@ -17,7 +17,7 @@ npm install @universal-packages/environment-replacer
 Replace matches in the string with node env variables.
 
 ```js
-import { replaceEnv } from '@universal-packages/environment-replacer'
+import { replaceEnv } from '@universal-packages/variable-replacer'
 
 const string = 'NODE_ENV: {{NODE_ENV}}, TS_JEST: {{TS_JEST}}, JEST_WORKER_ID: {{ JEST_WORKER_ID }}'
 const finalString = replaceEnv(string)
@@ -32,7 +32,7 @@ console.log(finalString)
 You can provide your own enclosure characters to match for replacements.
 
 ```js
-import { replaceEnv } from '@universal-packages/environment-replacer'
+import { replaceEnv } from '@universal-packages/variable-replacer'
 
 const string = 'NODE_ENV: <<NODE_ENV>>, TS_JEST: <<TS_JEST>>, JEST_WORKER_ID: {{ JEST_WORKER_ID }}'
 const finalString = replaceEnv(string, ['<<', '>>'])
@@ -47,7 +47,7 @@ console.log(finalString)
 Replace matches in the string with node env variables.
 
 ```js
-import { replaceVars } from '@universal-packages/environment-replacer'
+import { replaceVars } from '@universal-packages/variable-replacer'
 
 const string = 'key: {{ key }}, another: {{another}}'
 const finalString = replaceVars(string, { key: 'key', another: 'value' })
@@ -62,7 +62,7 @@ console.log(finalString)
 Same as with env you can provide your own enclosure characters to match for replacements.
 
 ```js
-import { replaceEnv } from '@universal-packages/environment-replacer'
+import { replaceEnv } from '@universal-packages/variable-replacer'
 
 const string = 'key: # key #, another: #another#'
 const finalString = replaceVars(string, { key: 'key', another: 'value' }, ['#', '#'])
@@ -77,7 +77,7 @@ console.log(finalString)
 You can pass your stringh thriugh both function to get a final string
 
 ```js
-import { replaceEnv } from '@universal-packages/environment-replacer'
+import { replaceEnv } from '@universal-packages/variable-replacer'
 
 const string = 'NODE_ENV: <<NODE_ENV>>, TS_JEST: <<TS_JEST>>, key: {{ key }}'
 let finalString = replaceEnv(string, ['<<', '>>'])

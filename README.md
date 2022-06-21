@@ -72,7 +72,7 @@ console.log(finalString)
 // > 'key: key, another: value'
 ```
 
-## Convine replacements
+## Combine replacements
 
 You can pass your stringh thriugh both function to get a final string
 

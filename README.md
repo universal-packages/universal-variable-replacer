@@ -42,9 +42,9 @@ console.log(finalString)
 // > 'NODE_ENV: test, TS_JEST: 1, JEST_WORKER_ID: {{ JEST_WORKER_ID }}'
 ```
 
-## replaceEnv()
+## replaceVars()
 
-Replace matches in the string with node env variables.
+Replace matches in the string with values provided in an object form.
 
 ```js
 import { replaceVars } from '@universal-packages/variable-replacer'
@@ -62,7 +62,7 @@ console.log(finalString)
 Same as with env you can provide your own enclosure characters to match for replacements.
 
 ```js
-import { replaceEnv } from '@universal-packages/variable-replacer'
+import { replaceVars } from '@universal-packages/variable-replacer'
 
 const string = 'key: # key #, another: #another#'
 const finalString = replaceVars(string, { key: 'key', another: 'value' }, ['#', '#'])
@@ -77,7 +77,7 @@ console.log(finalString)
 You can pass your stringh thriugh both function to get a final string
 
 ```js
-import { replaceEnv } from '@universal-packages/variable-replacer'
+import { replaceEnv, replaceVars } from '@universal-packages/variable-replacer'
 
 const string = 'NODE_ENV: <<NODE_ENV>>, TS_JEST: <<TS_JEST>>, key: {{ key }}'
 let finalString = replaceEnv(string, ['<<', '>>'])

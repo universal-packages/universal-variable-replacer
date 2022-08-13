@@ -17,7 +17,7 @@ export function replaceVars(input: string, variables: Record<string, any>, enclo
       const envName = execResult[1]
       const envValue = variables[envName]
 
-      // "this is and {{ EXAMPLE }}" --> "this is an example"
+      // "this is an {{ EXAMPLE }}" --> "this is an example"
       if (envValue) finalValue = finalValue.replace(currentMatch, envValue)
     }
   }

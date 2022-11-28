@@ -1,8 +1,8 @@
 import { replaceEnv, replaceVars } from '../src'
 
-describe('envaronment-replacer', (): void => {
+describe('variable-replacer', (): void => {
   describe('replaceEnv', (): void => {
-    it('replaces node env variables into the enclusres', async (): Promise<void> => {
+    it('replaces node env variables into the enclosures', async (): Promise<void> => {
       const string = 'NODE_ENV: {{NODE_ENV}}, TS_JEST: {{TS_JEST}}, JEST_WORKER_ID: {{ JEST_WORKER_ID }}'
       const finalString = replaceEnv(string)
 
@@ -16,7 +16,7 @@ describe('envaronment-replacer', (): void => {
       expect(finalString).toEqual('NODE_ENV: test, TS_JEST: 1, NO_IN_ENVS: {{ NO_IN_ENVS }}')
     })
 
-    it('lets specify other enclusures', async (): Promise<void> => {
+    it('lets specify other enclosures', async (): Promise<void> => {
       const string = 'NODE_ENV: <<NODE_ENV>>, TS_JEST: <<TS_JEST>>, JEST_WORKER_ID: {{ JEST_WORKER_ID }}'
       const finalString = replaceEnv(string, ['<<', '>>'])
 
@@ -25,7 +25,7 @@ describe('envaronment-replacer', (): void => {
   })
 
   describe('replaceVars', (): void => {
-    it('replaces provided variables into the enclusres', async (): Promise<void> => {
+    it('replaces provided variables into the enclosures', async (): Promise<void> => {
       const string = 'key: {{ key }}, another: {{another}}'
       const finalString = replaceVars(string, { key: 'key', another: 'value' })
 
@@ -39,7 +39,7 @@ describe('envaronment-replacer', (): void => {
       expect(finalString).toEqual('key: key, not_in_there: {{not_in_there}}')
     })
 
-    it('lets specify other enclusures', async (): Promise<void> => {
+    it('lets specify other enclosures', async (): Promise<void> => {
       const string = 'key: # key #, another: #another#'
       const finalString = replaceVars(string, { key: 'key', another: 'value' }, ['#', '#'])
 

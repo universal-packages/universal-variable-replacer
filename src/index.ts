@@ -1,1 +1,1 @@
-export * from './envaronment-replacer'
+export * from './variable-replacer'

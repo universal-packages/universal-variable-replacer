@@ -74,7 +74,7 @@ console.log(finalString)
 
 ## Combine replacements
 
-You can pass your stringh thriugh both function to get a final string
+You can pass your string through both function to get a final string
 
 ```js
 import { replaceEnv, replaceVars } from '@universal-packages/variable-replacer'
@@ -99,7 +99,7 @@ This library is developed in TypeScript and shipped fully typed.
 
 ## Contributing
 
-The development of this library in the open on GitHub, and we are grateful to the community for contributing bugfixes and improvements. Read below to learn how you can take part in improving this library.
+The development of this library happens in the open on GitHub, and we are grateful to the community for contributing bugfixes and improvements. Read below to learn how you can take part in improving this library.
 
 - [Code of Conduct](./CODE_OF_CONDUCT.md)
 - [Contributing Guide](./CONTRIBUTING.md)

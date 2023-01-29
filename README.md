@@ -12,7 +12,8 @@ Easily inject environment variables or provided variables to compose richer stri
 npm install @universal-packages/variable-replacer
 ```
 
-## replaceEnv()
+## Global methods
+#### **`replaceEnv(input: string, [enclosures: [string, string]])`**
 
 Replace matches in the string with node env variables.
 
@@ -27,7 +28,7 @@ console.log(finalString)
 // > 'NODE_ENV: test, TS_JEST: 1, JEST_WORKER_ID: 1'
 ```
 
-### Enclosures
+#### Enclosures
 
 You can provide your own enclosure characters to match for replacements.
 
@@ -42,7 +43,7 @@ console.log(finalString)
 // > 'NODE_ENV: test, TS_JEST: 1, JEST_WORKER_ID: {{ JEST_WORKER_ID }}'
 ```
 
-## replaceVars()
+#### **`replaceVars(input: string, variables: Object, [enclosures: [string, string]])`**
 
 Replace matches in the string with values provided in an object form.
 
@@ -57,7 +58,7 @@ console.log(finalString)
 // > 'key: key, another: value'
 ```
 
-### Enclosures
+#### Enclosures
 
 Same as with env you can provide your own enclosure characters to match for replacements.
 

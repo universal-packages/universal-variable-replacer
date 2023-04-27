@@ -1,4 +1,4 @@
-import { replaceEnv, replaceVars } from '../src'
+import { cleanOrphanReplaceable, replaceEnv, replaceVars } from '../src'
 
 describe('variable-replacer', (): void => {
   describe('replaceEnv', (): void => {
@@ -44,6 +44,22 @@ describe('variable-replacer', (): void => {
       const finalString = replaceVars(string, { key: 'key', another: 'value' }, ['#', '#'])
 
       expect(finalString).toEqual('key: key, another: value')
+    })
+  })
+
+  describe('cleanOrphanReplaceable', (): void => {
+    it('replaces all replaceable with empty string', async (): Promise<void> => {
+      const string = 'key: {{ key }}, another: {{another}}'
+      const finalString = cleanOrphanReplaceable(string,)
+
+      expect(finalString).toEqual('key: , another: ')
+    })
+
+    it('lets specify other enclosures', async (): Promise<void> => {
+      const string = 'key: # key #, another: #another#'
+      const finalString = cleanOrphanReplaceable(string, ['#', '#'])
+
+      expect(finalString).toEqual('key: , another: ')
     })
   })
 })

@@ -13,6 +13,7 @@ npm install @universal-packages/variable-replacer
 ```
 
 ## Global methods
+
 #### **`replaceEnv(input: string, [enclosures: [string, string]])`**
 
 Replace matches in the string with node env variables.
@@ -92,6 +93,36 @@ finalString = replaceVars(string, { key: 'value' })
 console.log(finalString)
 
 // > 'NODE_ENV: test, TS_JEST: 1, key: value'
+```
+
+#### **`cleanOrphanReplaceable(input: string, [enclosures: [string, string]])`**
+
+Cleans the string from orphan replaceable enclosures. Useful in case the variables are not provided and you don;t want the value `{{ value}}` as teh actual value and instead an empty value is more suitable.
+
+```js
+import { cleanOrphanReplaceable } from '@universal-packages/variable-replacer'
+
+const string = 'key: {{ key }}, another: {{another}}'
+const finalString = cleanOrphanReplaceable(string)
+
+console.log(finalString)
+
+// > 'key: , another: '
+```
+
+#### Enclosures
+
+Same as with env you can provide your own enclosure characters to match for replacements.
+
+```js
+import { replaceVars } from '@universal-packages/variable-replacer'
+
+const string = 'key: # key #, another: #another#'
+const finalString = replaceVars(string, { key: 'key', another: 'value' }, ['#', '#'])
+
+console.log(finalString)
+
+// > 'key: key, another: value'
 ```
 
 ## Typescript

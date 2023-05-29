@@ -50,7 +50,7 @@ describe('variable-replacer', (): void => {
   describe('cleanOrphanReplaceable', (): void => {
     it('replaces all replaceable with empty string', async (): Promise<void> => {
       const string = 'key: {{ key }}, another: {{another}}'
-      const finalString = cleanOrphanReplaceable(string,)
+      const finalString = cleanOrphanReplaceable(string)
 
       expect(finalString).toEqual('key: , another: ')
     })

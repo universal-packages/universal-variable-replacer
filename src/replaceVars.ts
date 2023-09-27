@@ -1,7 +1,3 @@
-export function replaceEnv(input: string, enclosures?: [string, string]): string {
-  return replaceVars(input, process.env, enclosures)
-}
-
 export function replaceVars(input: string, variables: Record<string, any>, enclosures: [string, string] = ['{{', '}}']): string {
   let finalValue = input
   const enclosureRegex = `${enclosures[0]}\\s*([^\\s${enclosures[0]}${enclosures[1]}]*)\\s*${enclosures[1]}`
@@ -23,8 +19,4 @@ export function replaceVars(input: string, variables: Record<string, any>, enclo
   }
 
   return finalValue
-}
-
-export function cleanOrphanReplaceable(input: string, enclosures: [string, string] = ['{{', '}}']): string {
-  return input.replace(new RegExp(`${enclosures[0]}\\s*([^\\s${enclosures[0]}${enclosures[1]}]*)\\s*${enclosures[1]}`, 'g'), '')
 }

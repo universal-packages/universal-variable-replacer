@@ -1,1 +1,3 @@
-export * from './variable-replacer'
+export * from './replaceVars'
+export * from './replaceEnv'
+export * from './cleanOrphanReplaceable'

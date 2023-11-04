@@ -1,4 +1,4 @@
-export function replaceVars(input: string, variables: Record<string, any>, enclosures: [string, string] = ['{{', '}}']): string {
+export function evaluateAndReplace(input: string, enclosures: [string, string] = ['<%', '%>']): string {
   let finalValue = input
   const enclosureA = `\\${enclosures[0].split('').join('\\')}`
   const enclosureB = `\\${enclosures[1].split('').join('\\')}`
@@ -8,15 +8,15 @@ export function replaceVars(input: string, variables: Record<string, any>, enclo
 
   if (matches) {
     for (let i = 0; i < matches.length; i++) {
-      // Looks like "{{ EXAMPLE }}"
+      // Looks like "<< 1 + 1 >>"
       const currentMatch = matches[i]
       const execResult = new RegExp(enclosureRegex, 'g').exec(currentMatch)
-      // Looks like "EXAMPLE"
-      const envName = execResult[1].trim()
-      const envValue = variables[envName]
+      // Looks like "1 + 1"
+      const jsCode = execResult[1]
+      const evaluation = eval(jsCode)
 
-      // "this is an {{ EXAMPLE }}" --> "this is an example"
-      if (envValue) finalValue = finalValue.replace(currentMatch, envValue)
+      // "result is << 1 + 1 >>" --> "result is 2"
+      finalValue = finalValue.replace(currentMatch, evaluation)
     }
   }
 

@@ -5,7 +5,7 @@ describe(replaceEnv, (): void => {
     const string = 'NODE_ENV: {{NODE_ENV}}, TS_JEST: {{TS_JEST}}, JEST_WORKER_ID: {{ JEST_WORKER_ID }}'
     const finalString = replaceEnv(string)
 
-    expect(finalString).toEqual('NODE_ENV: test, TS_JEST: 1, JEST_WORKER_ID: 1')
+    expect(finalString).toEqual(`NODE_ENV: test, TS_JEST: 1, JEST_WORKER_ID: ${process.env.JEST_WORKER_ID}`)
   })
 
   it('lets the string as it is if not var is provided', async (): Promise<void> => {

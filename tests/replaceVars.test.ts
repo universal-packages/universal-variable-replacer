@@ -1,6 +1,6 @@
 import { replaceVars } from '../src'
 
-describe('replaceVars', (): void => {
+describe(replaceVars, (): void => {
   it('replaces provided variables into the enclosures', async (): Promise<void> => {
     const string = 'key: {{ key }}, another: {{another}}'
     const finalString = replaceVars(string, { key: 'key', another: 'value' })

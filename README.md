@@ -74,6 +74,36 @@ console.log(finalString)
 // > 'key: key, another: value'
 ```
 
+#### **`evaluateAndReplace(input: string, [enclosures: [string, string]])`**
+
+Captures what is between the enclosures and evaluates it as a JS expression. The result is then used to replace the match in the string.
+
+```js
+import { evaluateAndReplace } from '@universal-packages/variable-replacer'
+
+const string = 'key: <% 1 + 1 %>, another: <% 2 + 2 %>'
+const finalString = evaluateAndReplace(string)
+
+console.log(finalString)
+
+// > 'key: 2, another: 4'
+```
+
+#### Enclosures
+
+You can provide your own enclosure characters to match for replacements.
+
+```js
+import { evaluateAndReplace } from '@universal-packages/variable-replacer'
+
+const string = 'key: ${ 1 + 1 }$ , another: ${2+2}$'
+const finalString = evaluateAndReplace(string, ['${', '}$'])
+
+console.log(finalString)
+
+// > 'key: 2, another: 4'
+```
+
 ## Combine replacements
 
 You can pass your string through both function to get a final string
@@ -112,7 +142,7 @@ console.log(finalString)
 
 #### Enclosures
 
-Same as with env you can provide your own enclosure characters to match for replacements.
+You can provide your own enclosure characters to match for replacements.
 
 ```js
 import { replaceVars } from '@universal-packages/variable-replacer'
@@ -122,7 +152,7 @@ const finalString = replaceVars(string, { key: 'key', another: 'value' }, ['#', 
 
 console.log(finalString)
 
-// > 'key: key, another: value'
+// > 'key: "", another: ""'
 ```
 
 ## Typescript

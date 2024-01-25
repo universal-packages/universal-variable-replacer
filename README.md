@@ -74,7 +74,7 @@ console.log(finalString)
 // > 'key: key, another: value'
 ```
 
-#### **`evaluateAndReplace(input: string, scope: Object, [enclosures: [string, string]])`**
+#### **`evaluateAndReplace(input: string, [options: Object])`**
 
 Captures what is between the enclosures and evaluates it as a JS expression. The result is then used to replace the match in the string.
 
@@ -89,35 +89,35 @@ console.log(finalString)
 // > 'key: 2, another: 4'
 ```
 
-#### Scope
+#### Options
 
-You can provide your own scope to use in your expression.
+- **`scope`** `Object`
+  You can provide your own scope to use in your expression.
 
-```js
-import { evaluateAndReplace } from '@universal-packages/variable-replacer'
+  ```js
+  import { evaluateAndReplace } from '@universal-packages/variable-replacer'
 
-const string = 'key: <% cpusCount / 2 %>, another: <% mem / 2 %>'
-const finalString = evaluateAndReplace(string, { cpusCount: 4, mem: 16 })
+  const string = 'key: <% cpusCount / 2 %>, another: <% mem / 2 %>'
+  const finalString = evaluateAndReplace(string, { cpusCount: 4, mem: 16 })
 
-console.log(finalString)
+  console.log(finalString)
 
-// > 'key: 2, another: 8'
-```
+  // > 'key: 2, another: 8'
+  ```
 
-#### Enclosures
+- **`enclosures`** `[string, string]`
+  You can provide your own enclosure characters to match for replacements.
 
-You can provide your own enclosure characters to match for replacements.
+  ```js
+  import { evaluateAndReplace } from '@universal-packages/variable-replacer'
 
-```js
-import { evaluateAndReplace } from '@universal-packages/variable-replacer'
+  const string = 'key: ${ 1 + 1 }$ , another: ${2+2}$'
+  const finalString = evaluateAndReplace(string, ['${', '}$'])
 
-const string = 'key: ${ 1 + 1 }$ , another: ${2+2}$'
-const finalString = evaluateAndReplace(string, ['${', '}$'])
+  console.log(finalString)
 
-console.log(finalString)
-
-// > 'key: 2, another: 4'
-```
+  // > 'key: 2, another: 4'
+  ```
 
 ## Combine replacements
 

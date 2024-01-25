@@ -74,7 +74,7 @@ console.log(finalString)
 // > 'key: key, another: value'
 ```
 
-#### **`evaluateAndReplace(input: string, [enclosures: [string, string]])`**
+#### **`evaluateAndReplace(input: string, scope: Object, [enclosures: [string, string]])`**
 
 Captures what is between the enclosures and evaluates it as a JS expression. The result is then used to replace the match in the string.
 
@@ -87,6 +87,21 @@ const finalString = evaluateAndReplace(string)
 console.log(finalString)
 
 // > 'key: 2, another: 4'
+```
+
+#### Scope
+
+You can provide your own scope to use in your expression.
+
+```js
+import { evaluateAndReplace } from '@universal-packages/variable-replacer'
+
+const string = 'key: <% cpusCount / 2 %>, another: <% mem / 2 %>'
+const finalString = evaluateAndReplace(string, { cpusCount: 4, mem: 16 })
+
+console.log(finalString)
+
+// > 'key: 2, another: 8'
 ```
 
 #### Enclosures

@@ -2,7 +2,7 @@ import { evaluateAndReplace } from '../src'
 
 describe(evaluateAndReplace, (): void => {
   it('evaluates code inside string that matches enclosures', async (): Promise<void> => {
-    const string = 'This is a value: <% 1 +1 %>'
+    const string = 'This is a value: <% 1 + 1 %>'
     const finalString = evaluateAndReplace(string)
 
     expect(finalString).toEqual('This is a value: 2')
@@ -19,8 +19,8 @@ describe(evaluateAndReplace, (): void => {
 
     expect(finalString).toEqual('This is a value: hello')
 
-    string = 'This is a value: <% objectValue.a %>'
-    finalString = evaluateAndReplace(string, { scope: { objectValue: { a: 'hello' } } })
+    string = 'This is a value: <% objectValue.extra-deep.value-a %>'
+    finalString = evaluateAndReplace(string, { scope: { objectValue: { 'extra-deep': { 'value-a': 'hello' } } } })
 
     expect(finalString).toEqual('This is a value: hello')
 

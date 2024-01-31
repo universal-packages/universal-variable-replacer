@@ -19,7 +19,7 @@ export function evaluateAndReplace(input: string, options?: EvaluateAndReplaceOp
       // Looks like "1 + 1"
       const jsCode = execResult[1].trim()
       // If came as "some.deep.value" it will be transformed to "some['deep']['value']"
-      const jsCodeWithBracketsSyntax = transformToBracketsSyntax(jsCode)
+      const jsCodeWithBracketsSyntax = jsCode.replace(/(\.(\w|-)*)/g, (match) => `["${match.slice(1)}"]`)
 
       const evaluation = ____MMMEVALUEATE98786875674674(jsCodeWithBracketsSyntax, finalOptions.scope)
 
@@ -29,31 +29,4 @@ export function evaluateAndReplace(input: string, options?: EvaluateAndReplaceOp
   }
 
   return finalValue
-}
-
-function transformToBracketsSyntax(inputString: string): string {
-  const parts = inputString.split('.')
-
-  const transformedString = parts
-    .map((part, index) => {
-      if (index === 0) {
-        // The first part does not need extra brackets or quotes
-        return part
-      } else if (part.includes('[')) {
-        // Handle the case where square brackets are already present
-        const nestedParts = part.split(/\[['"]?(.*?)['"]?\]/).filter(Boolean)
-        const nestedString = nestedParts.map((p) => "['" + p + "']").join('')
-        return nestedString
-      } else if (part.includes('(') && part.includes(')')) {
-        // Handle function calls
-        const functionName = part.substring(0, part.indexOf('('))
-        const argumentsString = part.substring(part.indexOf('('))
-        return "['" + functionName + "']" + argumentsString
-      } else {
-        return "['" + part + "']"
-      }
-    })
-    .join('')
-
-  return transformedString
 }

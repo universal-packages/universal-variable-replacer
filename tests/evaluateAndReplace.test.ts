@@ -8,31 +8,79 @@ describe(evaluateAndReplace, (): void => {
     expect(finalString).toEqual('This is a value: 2')
   })
 
-  it('uses the scope to evaluate the code', async (): Promise<void> => {
-    let string = 'This is a value: <% a + 1 %>'
-    let finalString = evaluateAndReplace(string, { scope: { a: 1 } })
+  it.only('uses the scope to evaluate the code', async (): Promise<void> => {
+    let string = 'This is a value: <% 1 + 1 %>'
+    let finalString = evaluateAndReplace(string)
 
     expect(finalString).toEqual('This is a value: 2')
 
-    string = 'This is a value: <% stringValue %>'
-    finalString = evaluateAndReplace(string, { scope: { stringValue: 'hello' } })
+    string = 'This is a value: <% a * 9 %>'
+    finalString = evaluateAndReplace(string, { scope: { a: 9 } })
 
-    expect(finalString).toEqual('This is a value: hello')
+    expect(finalString).toEqual('This is a value: 81')
 
-    string = 'This is a value: <% objectValue.extra-deep.value-a %>'
-    finalString = evaluateAndReplace(string, { scope: { objectValue: { 'extra-deep': { 'value-a': 'hello' } } } })
+    string = 'This is a value: <% object.things %>'
+    finalString = evaluateAndReplace(string, { scope: { object: { things: 'value' } } })
 
-    expect(finalString).toEqual('This is a value: hello')
+    expect(finalString).toEqual('This is a value: value')
 
-    string = 'This is a value: <% arrayValue[0] %>'
-    finalString = evaluateAndReplace(string, { scope: { arrayValue: ['hello'] } })
+    string = 'This is a value: <% object.things.deep %>'
+    finalString = evaluateAndReplace(string, { scope: { object: { things: { deep: 'value' } } } })
 
-    expect(finalString).toEqual('This is a value: hello')
+    expect(finalString).toEqual('This is a value: value')
 
-    string = 'This is a value: <% arrayValue[0].a %>'
-    finalString = evaluateAndReplace(string, { scope: { arrayValue: [{ a: 'hello' }] } })
+    string = 'This is a value: <% object.callable().things %>'
+    finalString = evaluateAndReplace(string, { scope: { object: { callable: () => ({ things: 'value' }) } } })
 
-    expect(finalString).toEqual('This is a value: hello')
+    string = 'This is a value: <% object.callable(argument) %>'
+    finalString = evaluateAndReplace(string, { scope: { object: { callable: (argument: any) => argument }, argument: 8 } })
+
+    expect(finalString).toEqual('This is a value: 8')
+
+    string = 'This is a value: <% object.callable(argument).deep %>'
+    finalString = evaluateAndReplace(string, { scope: { object: { callable: (argument: any) => ({ deep: argument }) }, argument: 8 } })
+
+    expect(finalString).toEqual('This is a value: 8')
+
+    string = 'This is a value: <% object.callable().things / object.value %>'
+    finalString = evaluateAndReplace(string, { scope: { object: { callable: () => ({ things: 8 }), value: 2 } } })
+
+    expect(finalString).toEqual('This is a value: 4')
+
+    string = 'This is a value: <% object["callable"]().things %>'
+    finalString = evaluateAndReplace(string, { scope: { object: { callable: () => ({ things: 8 }) } } })
+
+    expect(finalString).toEqual('This is a value: 8')
+
+    string = 'This is a value: <% object.some-value.things["deep"] * 35 %>'
+    finalString = evaluateAndReplace(string, { scope: { object: { 'some-value': { things: { deep: 8 } } } } })
+
+    expect(finalString).toEqual('This is a value: 280')
+
+    string = 'This is a value: <% object.some-value.things["deep"] * object.deep.value %>'
+    finalString = evaluateAndReplace(string, { scope: { object: { 'some-value': { things: { deep: 8 } }, deep: { value: 35 } } } })
+
+    expect(finalString).toEqual('This is a value: 280')
+
+    string = 'This is a value: <% const variable = object.things; variable %>'
+    finalString = evaluateAndReplace(string, { scope: { object: { things: 8 } } })
+
+    expect(finalString).toEqual('This is a value: 8')
+
+    string = 'This is a value: <% variable.things += object.value %>'
+    finalString = evaluateAndReplace(string, { scope: { variable: { things: 8 }, object: { value: 35 } } })
+
+    expect(finalString).toEqual('This is a value: 43')
+
+    string = 'This is a value: <% if(value.object && object.value) { object.callable() } %>'
+    finalString = evaluateAndReplace(string, { scope: { value: { object: true }, object: { value: 35, callable: () => 'called' } } })
+
+    expect(finalString).toEqual('This is a value: called')
+
+    string = 'This is a value: <% if(value.object && object.value) { object.callable() } %>'
+    finalString = evaluateAndReplace(string, { scope: { value: { object: false }, object: { value: 35, callable: () => 'called' } } })
+
+    expect(finalString).toEqual('This is a value: undefined')
   })
 
   it('handle undefined and null and nan values', async (): Promise<void> => {

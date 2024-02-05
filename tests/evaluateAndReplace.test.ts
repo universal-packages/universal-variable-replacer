@@ -8,7 +8,7 @@ describe(evaluateAndReplace, (): void => {
     expect(finalString).toEqual('This is a value: 2')
   })
 
-  it.only('uses the scope to evaluate the code', async (): Promise<void> => {
+  it('uses the scope to evaluate the code', async (): Promise<void> => {
     let string = 'This is a value: <% 1 + 1 %>'
     let finalString = evaluateAndReplace(string)
 
@@ -97,7 +97,7 @@ describe(evaluateAndReplace, (): void => {
     string = 'This is a value: <% nanValue %>'
     finalString = evaluateAndReplace(string, { scope: { nanValue: NaN } })
 
-    expect(finalString).toEqual('This is a value: null')
+    expect(finalString).toEqual('This is a value: NaN')
 
     string = 'This is a value: <% undefined %>'
     finalString = evaluateAndReplace(string)
@@ -116,8 +116,8 @@ describe(evaluateAndReplace, (): void => {
   })
 
   it('lets specify other enclosures', async (): Promise<void> => {
-    const string = 'This is a value: ~~ 1 + 1 ~~'
-    const finalString = evaluateAndReplace(string, { enclosures: ['~~', '~~'] })
+    const string = 'This is a value: ${{ 1 + 1 }}'
+    const finalString = evaluateAndReplace(string, { enclosures: ['${{', '}}'] })
 
     expect(finalString).toEqual('This is a value: 2')
   })

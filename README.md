@@ -119,6 +119,21 @@ console.log(finalString)
   // > 'key: 2, another: 4'
   ```
 
+#### **`evaluate(input: string, [scope: Object])`**
+
+Evaluates the whole string as a JS expression and returns the actual JS result.
+
+```js
+import { evaluate } from '@universal-packages/variable-replacer'
+
+const string = 'a + b'
+const result = evaluate(string, { a: 1, b: 2 })
+
+console.log(result)
+
+// > 3
+```
+
 ## Combine replacements
 
 You can pass your string through both function to get a final string

@@ -32,6 +32,8 @@ describe(evaluateAndReplace, (): void => {
     string = 'This is a value: <% object.callable().things %>'
     finalString = evaluateAndReplace(string, { scope: { object: { callable: () => ({ things: 'value' }) } } })
 
+    expect(finalString).toEqual('This is a value: value')
+
     string = 'This is a value: <% object.callable(argument) %>'
     finalString = evaluateAndReplace(string, { scope: { object: { callable: (argument: any) => argument }, argument: 8 } })
 

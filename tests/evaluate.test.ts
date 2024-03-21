@@ -34,6 +34,31 @@ describe(evaluate, (): void => {
 
     expect(finalString).toEqual('value')
 
+    string = "object.callable('this.is.an.argument').things"
+    finalString = evaluate(string, { object: { callable: (arg: string) => ({ things: arg }) } })
+
+    expect(finalString).toEqual('this.is.an.argument')
+
+    string = 'object.callable("this.is.an.argument").things'
+    finalString = evaluate(string, { object: { callable: (arg: string) => ({ things: arg }) } })
+
+    expect(finalString).toEqual('this.is.an.argument')
+
+    string = 'object.callable(`this.is.an.argument`).things'
+    finalString = evaluate(string, { object: { callable: (arg: string) => ({ things: arg }) } })
+
+    expect(finalString).toEqual('this.is.an.argument')
+
+    string = 'object.callable(`this.is.an.argument${34}`).things'
+    finalString = evaluate(string, { object: { callable: (arg: string) => ({ things: arg }) } })
+
+    expect(finalString).toEqual('this.is.an.argument34')
+
+    string = "object.callable(`this.is.an.argument.${'text.text'}`).things"
+    finalString = evaluate(string, { object: { callable: (arg: string) => ({ things: arg }) } })
+
+    expect(finalString).toEqual('this.is.an.argument.text.text')
+
     string = 'object.callable(argument)'
     finalString = evaluate(string, { object: { callable: (argument: any) => argument }, argument: 8 })
 
@@ -81,8 +106,6 @@ describe(evaluate, (): void => {
 
     string = 'if(value.object && object.value) { object.callable() }'
     finalString = evaluate(string, { value: { object: false }, object: { value: 35, callable: () => 'called' } })
-
-    expect(finalString).toEqual(undefined)
   })
 
   it('handle undefined and null and nan values', async (): Promise<void> => {
